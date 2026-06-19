@@ -21,12 +21,61 @@ struct MovieDashboard: View {
 }
 
 struct MovieDashboardContent: View {
+    let movies: [Movie] = [
+        Movie(
+            title: "Inception",
+            genre: ["Action", "Sci-Fi", "Thriller"],
+            description: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.",
+            rating: "8.8",
+            year: "2010"
+        ),
+        
+        Movie(
+            title: "The Dark Knight",
+            genre: ["Action", "Drama", "Thriller"],
+            description: "Batman faces the Joker, a criminal mastermind who plunges Gotham into chaos.",
+            rating: "9.0",
+            year: "2008"
+        ),
+        
+        Movie(
+            title: "Interstellar",
+            genre: ["Adventure", "Drama", "Sci-Fi"],
+            description: "A team of explorers travel through a wormhole in space to ensure humanity's survival.",
+            rating: "8.6",
+            year: "2014"
+        ),
+        
+        Movie(
+            title: "Avengers: Endgame",
+            genre: ["Action", "Adventure", "Sci-Fi"],
+            description: "The Avengers assemble once more to reverse the damage caused by Thanos.",
+            rating: "8.4",
+            year: "2019"
+        ),
+        
+        Movie(
+            title: "Toy Story",
+            genre: ["Animation", "Comedy", "Adventure"],
+            description: "Toys come to life when humans are not present, leading to fun-filled adventures.",
+            rating: "8.3",
+            year: "1995"
+        ),
+        
+        Movie(
+            title: "Joker",
+            genre: ["Drama", "Thriller"],
+            description: "A mentally troubled comedian descends into madness and becomes the Joker.",
+            rating: "8.4",
+            year: "2019"
+        )
+    ]
     var body: some View {
         ScrollView{
             Section(content: {
                 VStack(spacing: 20){
-                    ForEach(0..<10){ index in
-                        MovieCardView()
+                    ForEach(movies){ item in
+                        MovieCardView(title: item.title, genre: Array(item.genre.prefix(2)), description: item.description, rating: item.rating, year: item.rating)
                     }
                 }
                 .padding()
@@ -40,7 +89,23 @@ struct MovieDashboardContent: View {
     }
 }
 
+struct Movie: Identifiable{
+    let id = UUID()
+    let title: String
+    let genre: [String]
+    let description: String
+    let rating: String
+    let year: String
+}
+
 struct MovieCardView: View {
+    
+    let title: String
+    let genre: [String]
+    let description: String
+    let rating: String
+    let year: String
+    
     var body: some View {
         HStack(spacing: 15){
             Image(systemName: "movieclapper")
@@ -49,33 +114,33 @@ struct MovieCardView: View {
                 .cornerRadius(5)
             
             VStack(alignment: .leading){
-                Text("KGF")
+                Text(title)
                     .font(.title3)
                     .fontWeight(.bold)
                 
                 HStack{
-                    ForEach(0..<2){ index in
-                        Text("Action")
+                    ForEach(genre, id: \.self){ item in
+                        Text(item.capitalized)
                             .padding(.horizontal, 10)
                             .background(.orange)
                             .cornerRadius(20)
                     }
                 }
                 
-                Text("In the blood-soaked Kolar Gold Fields, Rocky's name strikes fear into his foes. While his allies look up to him, the government sees him as a threat to law and order. Rocky must battle threats from all sides for unchallenged")
+                Text(description)
                     .lineLimit(3)
                 
                 HStack{
                     Image(systemName: "star")
                         .foregroundStyle(.orange)
-                    Text("8.2")
+                    Text(rating)
                         .fontWeight(.bold)
                         .foregroundStyle(.red)
                 }
                 
             }
             
-            Text("2018")
+            Text(year)
                 .font(.title3)
                 .fontWeight(.medium)
             
