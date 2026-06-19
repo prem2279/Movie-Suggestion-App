@@ -11,7 +11,7 @@ import SwiftUI
 struct Movie_Suggestion_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MovieDashboard()
         }
     }
 }
